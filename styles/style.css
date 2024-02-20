@@ -25,3 +25,7 @@ body {
 	background-color: rgba(182, 166, 166, 0.2);
 	border-radius: 0.3vh;
 }
+
+.grid .O {
+	background-color: #eb0ed5;
+}
