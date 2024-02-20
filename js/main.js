@@ -1,11 +1,16 @@
 const PLAYEFIELD_COLUMNS = 10;
 const PLAYEFIELD_ROWS = 20;
-const TETROMINO_NAMES = ["O"];
+const TETROMINO_NAMES = ["O", "J"];
 
 const TETROMINOES = {
 	O: [
 		[1, 1],
 		[1, 1],
+	],
+	J: [
+		[1, 0, 0],
+		[1, 1, 1],
+		[0, 0, 0],
 	],
 };
 
@@ -21,17 +26,21 @@ function generatePlayField() {
 		const divEl = document.createElement("div");
 		document.querySelector(".grid").append(divEl);
 	}
+
+	playfield = new Array(PLAYEFIELD_ROWS)
+		.fill()
+		.map(() => new Array(PLAYEFIELD_COLUMNS).fill(0));
 }
 
 function generateTetromino() {
-	const name = TETROMINO_NAMES[0];
+	const name = TETROMINO_NAMES[1];
 	const matrix = TETROMINOES[name];
 
 	tetromino = {
 		name,
 		matrix,
-		row: 3,
-		column: 5,
+		row: 2,
+		column: 3,
 	};
 }
 
@@ -41,7 +50,13 @@ generateTetromino();
 const cells = document.querySelectorAll(".grid div");
 
 function drawPlayField() {
-	// cells[15].classList.add("O");
+	for (let row = 0; row < PLAYEFIELD_ROWS; row++) {
+		for (let column = 0; column < PLAYEFIELD_COLUMNS; column++) {
+			const name = playfield[row][column];
+			const cellIndex = convertPositionToIndex(row, column);
+			cells[cellIndex].classList.add(name);
+		}
+	}
 }
 
 function drawTetromino() {
@@ -50,14 +65,48 @@ function drawTetromino() {
 
 	for (let row = 0; row < tetrominoMatrixSize; row++) {
 		for (let column = 0; column < tetrominoMatrixSize; column++) {
+			if (!tetromino.matrix[row][column]) continue;
 			const cellIndex = convertPositionToIndex(
 				tetromino.row + row,
 				tetromino.column + column
 			);
-			cells[cellIndex].classList.add("O");
+			cells[cellIndex].classList.add(name);
 		}
 	}
 }
 
-drawTetromino();
-drawPlayField();
+// drawTetromino();
+// drawPlayField();
+
+function draw() {
+	cells.forEach((cell) => cell.removeAttribute("class"));
+	drawTetromino();
+	drawPlayField();
+}
+draw();
+
+document.addEventListener("keydown", onKeyDown);
+function onKeyDown(e) {
+	switch (e.key) {
+		case "ArrowDown":
+			moveTetrominoDown();
+			break;
+		case "ArrowLeft":
+			moveTetrominoLeft();
+			break;
+		case "ArrowRight":
+			moveTetrominoRight();
+			break;
+	}
+	draw();
+}
+
+function moveTetrominoDown() {
+	tetromino.row += 1;
+}
+function moveTetrominoLeft() {
+	tetromino.column -= 1;
+}
+function moveTetrominoRight() {
+	tetromino.column += 1;
+}
