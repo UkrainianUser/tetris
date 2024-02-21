@@ -1,5 +1,5 @@
-const PLAYEFIELD_COLUMNS = 10;
-const PLAYEFIELD_ROWS = 20;
+const PLAYFIELD_COLUMNS = 10;
+const PLAYFIELD_ROWS = 20;
 const TETROMINO_NAMES = ["O", "J", "I", "N"];
 
 const TETROMINOES = {
@@ -26,21 +26,21 @@ const TETROMINOES = {
 };
 
 function convertPositionToIndex(row, column) {
-	return row * PLAYEFIELD_COLUMNS + column;
+	return row * PLAYFIELD_COLUMNS + column;
 }
 
 let playfield;
 let tetromino;
 
 function generatePlayField() {
-	for (let i = 0; i < PLAYEFIELD_ROWS * PLAYEFIELD_COLUMNS; i++) {
+	for (let i = 0; i < PLAYFIELD_ROWS * PLAYFIELD_COLUMNS; i++) {
 		const divEl = document.createElement("div");
 		document.querySelector(".grid").append(divEl);
 	}
 
-	playfield = new Array(PLAYEFIELD_ROWS)
+	playfield = new Array(PLAYFIELD_ROWS)
 		.fill()
-		.map(() => new Array(PLAYEFIELD_COLUMNS).fill(0));
+		.map(() => new Array(PLAYFIELD_COLUMNS).fill(0));
 }
 
 function getRandomTetrominoName() {
@@ -51,6 +51,7 @@ function getRandomTetrominoName() {
 
 function generateTetromino() {
 	const name = getRandomTetrominoName();
+	console.log(name);
 	const matrix = TETROMINOES[name];
 
 	tetromino = {
@@ -67,8 +68,8 @@ generateTetromino();
 const cells = document.querySelectorAll(".grid div");
 
 function drawPlayField() {
-	for (let row = 0; row < PLAYEFIELD_ROWS; row++) {
-		for (let column = 0; column < PLAYEFIELD_COLUMNS; column++) {
+	for (let row = 0; row < PLAYFIELD_ROWS; row++) {
+		for (let column = 0; column < PLAYFIELD_COLUMNS; column++) {
 			const name = playfield[row][column];
 			const cellIndex = convertPositionToIndex(row, column);
 			cells[cellIndex].classList.add(name);
