@@ -43,8 +43,14 @@ function generatePlayField() {
 		.map(() => new Array(PLAYEFIELD_COLUMNS).fill(0));
 }
 
+function getRandomTetrominoName() {
+	const randomIndex = Math.floor(Math.random() * TETROMINO_NAMES.length);
+	const name = TETROMINO_NAMES[randomIndex];
+	return name;
+}
+
 function generateTetromino() {
-	const name = TETROMINO_NAMES[3];
+	const name = getRandomTetrominoName();
 	const matrix = TETROMINOES[name];
 
 	tetromino = {
