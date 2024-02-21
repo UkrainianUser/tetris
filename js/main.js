@@ -51,7 +51,7 @@ function getRandomTetrominoName() {
 
 function generateTetromino() {
 	const name = getRandomTetrominoName();
-	console.log(name);
+
 	const matrix = TETROMINOES[name];
 
 	tetromino = {
